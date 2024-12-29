@@ -9,11 +9,29 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: ['universehealthservice.com', 'http://localhost:3000'],
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
+    origin: [
+      'https://universe-internal-medicine-specialty-clinic-xvy6.vercel.app', 
+      'http://localhost:3000',
+      'https://universehealthservice.com'
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Allow cookies if needed
   })
 );
+
+// Middleware to handle preflight requests
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).send(); // Send response for preflight
+  }
+  next();
+});
+
 app.use(bodyParser.json());
 
 const transporter = nodemailer.createTransport({
