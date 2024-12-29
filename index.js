@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: ['https://universe-internal-medicine-specialty-clinic-xvy6.vercel.app', 'http://localhost:3000'],
+    origin: ['universehealthservice.com', 'http://localhost:3000'],
     methods: 'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   })
